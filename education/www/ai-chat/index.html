@@ -1,0 +1,469 @@
+{% extends "templates/web.html" %}
+
+{% block title %}AI Chat Assistant{% endblock %}
+
+{% block head_include %}
+<style>
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.ai {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    word-wrap: break-word;
+}
+
+.message.user .message-content {
+    background: #007bff;
+    color: white;
+    margin-left: auto;
+}
+
+.message.ai .message-content {
+    background: white;
+    border: 1px solid #ddd;
+    margin-right: auto;
+}
+
+.message-time {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background: #0056b3;
+}
+
+.chat-input button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.typing-indicator {
+    display: none;
+    padding: 10px;
+    font-style: italic;
+    color: #666;
+}
+
+.feedback-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.feedback-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.feedback-btn:hover {
+    background: #f0f0f0;
+}
+
+.feedback-btn.selected {
+    background: #007bff;
+    color: white;
+}
+
+.conversation-list {
+    max-width: 300px;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+.conversation-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.conversation-item:hover {
+    background: #f8f9fa;
+}
+
+.conversation-item.active {
+    background: #007bff;
+    color: white;
+}
+
+.main-chat-area {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .main-chat-area {
+        flex-direction: column;
+    }
+
+    .conversation-list {
+        max-width: 100%;
+        height: 200px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">AI Chat Assistant</h1>
+
+    <div class="main-chat-area">
+        <!-- Conversation List -->
+        <div class="conversation-list">
+            <div class="p-3 border-bottom">
+                <h6>Conversations</h6>
+                <button class="btn btn-sm btn-primary" onclick="startNewConversation()">New Chat</button>
+            </div>
+            <div id="conversationList">
+                <!-- Conversations will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div class="chat-header">
+                <span id="chatTitle">AI Assistant</span>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    <div class="message-content">
+                        Hello! I'm your AI assistant. How can I help you today?
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                AI is typing...
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" id="sendButton">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentConversation = null;
+let conversations = [];
+
+// Initialize chat
+document.addEventListener('DOMContentLoaded', function() {
+    loadConversations();
+    loadAIConfig();
+});
+
+function loadAIConfig() {
+    frappe.call({
+        method: 'education.education.api.get_ai_config_public',
+        callback: function(r) {
+            if (r.message) {
+                console.log('AI Config:', r.message);
+            }
+        }
+    });
+}
+
+function loadConversations() {
+    frappe.call({
+        method: 'education.education.api.get_ai_conversations',
+        args: {
+            limit: 20
+        },
+        callback: function(r) {
+            if (r.message) {
+                conversations = r.message;
+                renderConversationList();
+            }
+        }
+    });
+}
+
+function renderConversationList() {
+    const listContainer = document.getElementById('conversationList');
+    listContainer.innerHTML = '';
+
+    conversations.forEach(conv => {
+        const item = document.createElement('div');
+        item.className = 'conversation-item';
+        item.onclick = () => loadConversation(conv.name);
+
+        item.innerHTML = `
+            <div class="fw-bold">${conv.title}</div>
+            <div class="text-muted small">${conv.status} • ${conv.message_count} messages</div>
+            <div class="text-muted small">${formatDate(conv.last_message_at)}</div>
+        `;
+
+        listContainer.appendChild(item);
+    });
+}
+
+function loadConversation(conversationName) {
+    currentConversation = conversationName;
+
+    // Update active conversation in list
+    document.querySelectorAll('.conversation-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    event.target.closest('.conversation-item').classList.add('active');
+
+    // Load messages
+    frappe.call({
+        method: 'education.education.api.get_conversation_messages',
+        args: {
+            conversation_name: conversationName,
+            limit: 50
+        },
+        callback: function(r) {
+            if (r.message) {
+                renderMessages(r.message);
+            }
+        }
+    });
+}
+
+function renderMessages(messages) {
+    const container = document.getElementById('chatMessages');
+    container.innerHTML = '';
+
+    messages.forEach(msg => {
+        addMessageToChat(msg.message_content, msg.message_type === 'Incoming' ? 'user' : 'ai', msg.creation, msg.name);
+
+        if (msg.ai_response && msg.message_type === 'Incoming') {
+            addMessageToChat(msg.ai_response, 'ai', msg.creation, msg.name);
+        }
+    });
+
+    scrollToBottom();
+}
+
+function startNewConversation() {
+    currentConversation = null;
+    document.getElementById('chatMessages').innerHTML = `
+        <div class="message ai">
+            <div class="message-content">
+                Hello! I'm your AI assistant. How can I help you today?
+            </div>
+        </div>
+    `;
+
+    // Clear active conversation
+    document.querySelectorAll('.conversation-item').forEach(item => {
+        item.classList.remove('active');
+    });
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+function sendMessage() {
+    const input = document.getElementById('messageInput');
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    // Add user message to chat
+    addMessageToChat(message, 'user');
+    input.value = '';
+
+    // Show typing indicator
+    showTypingIndicator();
+
+    // Send message to backend
+    frappe.call({
+        method: 'education.education.api.send_ai_message',
+        args: {
+            recipient_type: 'AI',
+            recipient: 'AI Assistant',
+            message_content: message,
+            subject: currentConversation ? null : 'New Inquiry'
+        },
+        callback: function(r) {
+            hideTypingIndicator();
+
+            if (r.message) {
+                // Reload conversations to get the new/updated one
+                loadConversations();
+
+                // Simulate AI response (in real implementation, this would come from the AI processing)
+                setTimeout(() => {
+                    addMessageToChat(
+                        "Thank you for your message. I'm processing your request and will respond shortly.",
+                        'ai'
+                    );
+                }, 1000);
+            } else {
+                addMessageToChat(
+                    "Sorry, I'm having trouble processing your message right now. Please try again later.",
+                    'ai'
+                );
+            }
+        },
+        error: function() {
+            hideTypingIndicator();
+            addMessageToChat(
+                "Sorry, I'm having trouble connecting right now. Please try again later.",
+                'ai'
+            );
+        }
+    });
+}
+
+function addMessageToChat(message, sender, timestamp = null, messageId = null) {
+    const container = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+
+    const time = timestamp ? formatTime(timestamp) : formatTime(new Date());
+
+    let feedbackButtons = '';
+    if (sender === 'ai' && messageId) {
+        feedbackButtons = `
+            <div class="feedback-buttons">
+                <button class="feedback-btn" onclick="submitFeedback('${messageId}', 5)">👍</button>
+                <button class="feedback-btn" onclick="submitFeedback('${messageId}', 1)">👎</button>
+            </div>
+        `;
+    }
+
+    messageDiv.innerHTML = `
+        <div class="message-content">
+            ${message}
+            <div class="message-time">${time}</div>
+            ${feedbackButtons}
+        </div>
+    `;
+
+    container.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function submitFeedback(messageId, rating) {
+    frappe.call({
+        method: 'education.education.api.submit_message_feedback',
+        args: {
+            message_name: messageId,
+            rating: rating
+        },
+        callback: function(r) {
+            if (r.message && r.message.success) {
+                // Update button state
+                event.target.classList.add('selected');
+                event.target.parentElement.querySelectorAll('.feedback-btn').forEach(btn => {
+                    if (btn !== event.target) btn.disabled = true;
+                });
+            }
+        }
+    });
+}
+
+function showTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'block';
+    document.getElementById('sendButton').disabled = true;
+    scrollToBottom();
+}
+
+function hideTypingIndicator() {
+    document.getElementById('typingIndicator').style.display = 'none';
+    document.getElementById('sendButton').disabled = false;
+}
+
+function scrollToBottom() {
+    const container = document.getElementById('chatMessages');
+    container.scrollTop = container.scrollHeight;
+}
+
+function formatTime(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+}
+
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
+}
+</script>
+{% endblock %}
+

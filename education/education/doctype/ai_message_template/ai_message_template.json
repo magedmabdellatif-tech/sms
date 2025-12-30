@@ -1,0 +1,238 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:template_name",
+ "creation": "2024-12-30 08:27:00.000000",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "template_name",
+  "template_type",
+  "category",
+  "is_active",
+  "column_break_5",
+  "priority",
+  "language",
+  "user_type",
+  "department",
+  "section_break_10",
+  "trigger_keywords",
+  "intent_patterns",
+  "section_break_13",
+  "template_content",
+  "variables",
+  "section_break_16",
+  "conditions",
+  "usage_count",
+  "last_used",
+  "column_break_20",
+  "success_rate",
+  "feedback_score",
+  "created_by",
+  "section_break_24",
+  "description",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "template_name",
+   "fieldtype": "Data",
+   "label": "Template Name",
+   "reqd": 1,
+   "unique": 1,
+   "length": 150
+  },
+  {
+   "fieldname": "template_type",
+   "fieldtype": "Select",
+   "label": "Template Type",
+   "options": "Auto Response\nEscalation\nWelcome\nClosing\nError\nCustom",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "label": "Category",
+   "options": "Admission\nFees\nCourses\nSchedule\nTechnical Support\nGeneral Inquiry\nComplaint\nFeedback"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority",
+   "default": "1"
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Data",
+   "label": "Language",
+   "default": "en",
+   "length": 10
+  },
+  {
+   "fieldname": "user_type",
+   "fieldtype": "Select",
+   "label": "User Type",
+   "options": "All\nStudent\nInstructor\nGuardian\nAdmin"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "trigger_keywords",
+   "fieldtype": "Small Text",
+   "label": "Trigger Keywords",
+   "description": "Comma-separated keywords that trigger this template"
+  },
+  {
+   "fieldname": "intent_patterns",
+   "fieldtype": "Small Text",
+   "label": "Intent Patterns",
+   "description": "Regular expressions or patterns for intent matching"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "template_content",
+   "fieldtype": "Long Text",
+   "label": "Template Content",
+   "reqd": 1
+  },
+  {
+   "fieldname": "variables",
+   "fieldtype": "JSON",
+   "label": "Variables",
+   "description": "Available variables for template substitution"
+  },
+  {
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "conditions",
+   "fieldtype": "JSON",
+   "label": "Conditions",
+   "description": "Conditions for template activation"
+  },
+  {
+   "fieldname": "usage_count",
+   "fieldtype": "Int",
+   "label": "Usage Count",
+   "default": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_used",
+   "fieldtype": "Datetime",
+   "label": "Last Used",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "success_rate",
+   "fieldtype": "Float",
+   "label": "Success Rate (%)",
+   "precision": 2,
+   "read_only": 1
+  },
+  {
+   "fieldname": "feedback_score",
+   "fieldtype": "Float",
+   "label": "Average Feedback Score",
+   "precision": 2,
+   "read_only": 1
+  },
+  {
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_24",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-12-30 08:27:00.000000",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "AI Message Template",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Education Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Instructor",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+

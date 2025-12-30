@@ -1,0 +1,342 @@
+{
+ "actions": [],
+ "creation": "2024-12-30 08:27:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ai_settings_section",
+  "enable_ai_processing",
+  "ai_provider",
+  "api_key",
+  "api_endpoint",
+  "column_break_6",
+  "model_name",
+  "max_tokens",
+  "temperature",
+  "timeout_seconds",
+  "section_break_11",
+  "auto_response_settings",
+  "enable_auto_responses",
+  "auto_response_confidence_threshold",
+  "enable_escalation",
+  "escalation_threshold",
+  "column_break_16",
+  "business_hours_only",
+  "business_hours_start",
+  "business_hours_end",
+  "weekend_responses",
+  "section_break_21",
+  "notification_settings",
+  "enable_email_notifications",
+  "enable_sms_notifications",
+  "enable_push_notifications",
+  "column_break_25",
+  "notification_template",
+  "escalation_email_template",
+  "response_email_template",
+  "section_break_29",
+  "advanced_settings",
+  "enable_conversation_analytics",
+  "enable_sentiment_analysis",
+  "enable_intent_classification",
+  "column_break_33",
+  "max_conversation_length",
+  "conversation_timeout_hours",
+  "enable_feedback_collection",
+  "section_break_37",
+  "system_prompts",
+  "default_system_prompt",
+  "student_system_prompt",
+  "instructor_system_prompt",
+  "admin_system_prompt"
+ ],
+ "fields": [
+  {
+   "fieldname": "ai_settings_section",
+   "fieldtype": "Section Break",
+   "label": "AI Settings"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_ai_processing",
+   "fieldtype": "Check",
+   "label": "Enable AI Processing"
+  },
+  {
+   "fieldname": "ai_provider",
+   "fieldtype": "Select",
+   "label": "AI Provider",
+   "options": "OpenAI\nAnthropic\nGoogle\nLocal Model\nCustom"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "fieldname": "api_endpoint",
+   "fieldtype": "Data",
+   "label": "API Endpoint"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "model_name",
+   "fieldtype": "Data",
+   "label": "Model Name",
+   "default": "gpt-3.5-turbo"
+  },
+  {
+   "fieldname": "max_tokens",
+   "fieldtype": "Int",
+   "label": "Max Tokens",
+   "default": "1000"
+  },
+  {
+   "fieldname": "temperature",
+   "fieldtype": "Float",
+   "label": "Temperature",
+   "default": "0.7",
+   "precision": "2"
+  },
+  {
+   "fieldname": "timeout_seconds",
+   "fieldtype": "Int",
+   "label": "Timeout (seconds)",
+   "default": "30"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "auto_response_settings",
+   "fieldtype": "Section Break",
+   "label": "Auto Response Settings"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_auto_responses",
+   "fieldtype": "Check",
+   "label": "Enable Auto Responses"
+  },
+  {
+   "fieldname": "auto_response_confidence_threshold",
+   "fieldtype": "Float",
+   "label": "Auto Response Confidence Threshold",
+   "default": "0.8",
+   "precision": "2"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_escalation",
+   "fieldtype": "Check",
+   "label": "Enable Escalation"
+  },
+  {
+   "fieldname": "escalation_threshold",
+   "fieldtype": "Float",
+   "label": "Escalation Threshold",
+   "default": "0.5",
+   "precision": "2"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "business_hours_only",
+   "fieldtype": "Check",
+   "label": "Business Hours Only"
+  },
+  {
+   "fieldname": "business_hours_start",
+   "fieldtype": "Time",
+   "label": "Business Hours Start",
+   "default": "09:00:00"
+  },
+  {
+   "fieldname": "business_hours_end",
+   "fieldtype": "Time",
+   "label": "Business Hours End",
+   "default": "17:00:00"
+  },
+  {
+   "default": "1",
+   "fieldname": "weekend_responses",
+   "fieldtype": "Check",
+   "label": "Weekend Responses"
+  },
+  {
+   "fieldname": "section_break_21",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notification_settings",
+   "fieldtype": "Section Break",
+   "label": "Notification Settings"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_email_notifications",
+   "fieldtype": "Check",
+   "label": "Enable Email Notifications"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_sms_notifications",
+   "fieldtype": "Check",
+   "label": "Enable SMS Notifications"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_push_notifications",
+   "fieldtype": "Check",
+   "label": "Enable Push Notifications"
+  },
+  {
+   "fieldname": "column_break_25",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "notification_template",
+   "fieldtype": "Link",
+   "label": "Notification Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "escalation_email_template",
+   "fieldtype": "Link",
+   "label": "Escalation Email Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "response_email_template",
+   "fieldtype": "Link",
+   "label": "Response Email Template",
+   "options": "Email Template"
+  },
+  {
+   "fieldname": "section_break_29",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "advanced_settings",
+   "fieldtype": "Section Break",
+   "label": "Advanced Settings"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_conversation_analytics",
+   "fieldtype": "Check",
+   "label": "Enable Conversation Analytics"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_sentiment_analysis",
+   "fieldtype": "Check",
+   "label": "Enable Sentiment Analysis"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_intent_classification",
+   "fieldtype": "Check",
+   "label": "Enable Intent Classification"
+  },
+  {
+   "fieldname": "column_break_33",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "max_conversation_length",
+   "fieldtype": "Int",
+   "label": "Max Conversation Length",
+   "default": "100"
+  },
+  {
+   "fieldname": "conversation_timeout_hours",
+   "fieldtype": "Int",
+   "label": "Conversation Timeout (hours)",
+   "default": "24"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_feedback_collection",
+   "fieldtype": "Check",
+   "label": "Enable Feedback Collection"
+  },
+  {
+   "fieldname": "section_break_37",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "system_prompts",
+   "fieldtype": "Section Break",
+   "label": "System Prompts"
+  },
+  {
+   "fieldname": "default_system_prompt",
+   "fieldtype": "Long Text",
+   "label": "Default System Prompt",
+   "default": "You are an AI assistant for an educational institution. Help users with their questions about courses, enrollment, fees, and general inquiries. Be helpful, professional, and concise."
+  },
+  {
+   "fieldname": "student_system_prompt",
+   "fieldtype": "Long Text",
+   "label": "Student System Prompt",
+   "default": "You are an AI assistant helping students. Provide information about courses, schedules, assignments, fees, and academic support. Be encouraging and supportive."
+  },
+  {
+   "fieldname": "instructor_system_prompt",
+   "fieldtype": "Long Text",
+   "label": "Instructor System Prompt",
+   "default": "You are an AI assistant helping instructors. Provide information about course management, student progress, administrative tasks, and teaching resources."
+  },
+  {
+   "fieldname": "admin_system_prompt",
+   "fieldtype": "Long Text",
+   "label": "Admin System Prompt",
+   "default": "You are an AI assistant helping administrators. Provide information about system management, reports, user management, and institutional operations."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-12-30 08:27:00.000000",
+ "modified_by": "Administrator",
+ "module": "Education",
+ "name": "AI Configuration",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Education Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
+

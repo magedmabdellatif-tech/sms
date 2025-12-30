@@ -1,0 +1,1 @@
+# AI Message Template module
