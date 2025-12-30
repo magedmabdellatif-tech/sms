@@ -109,7 +109,7 @@ class AIMessaging {
                     comment: comment
                 }
             });
-            
+
             if (response.message && response.message.success) {
                 frappe.show_alert({
                     message: 'Feedback submitted',

@@ -169,7 +169,7 @@
     .main-chat-area {
         flex-direction: column;
     }
-    
+
     .conversation-list {
         max-width: 100%;
         height: 200px;
@@ -183,7 +183,7 @@
 {% block page_content %}
 <div class="container mt-4">
     <h1 class="text-center mb-4">AI Chat Assistant</h1>
-    
+
     <div class="main-chat-area">
         <!-- Conversation List -->
         <div class="conversation-list">
@@ -195,13 +195,13 @@
                 <!-- Conversations will be loaded here -->
             </div>
         </div>
-        
+
         <!-- Chat Container -->
         <div class="chat-container">
             <div class="chat-header">
                 <span id="chatTitle">AI Assistant</span>
             </div>
-            
+
             <div class="chat-messages" id="chatMessages">
                 <div class="message ai">
                     <div class="message-content">
@@ -209,11 +209,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="typing-indicator" id="typingIndicator">
                 AI is typing...
             </div>
-            
+
             <div class="chat-input">
                 <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()" id="sendButton">Send</button>
@@ -261,31 +261,31 @@ function loadConversations() {
 function renderConversationList() {
     const listContainer = document.getElementById('conversationList');
     listContainer.innerHTML = '';
-    
+
     conversations.forEach(conv => {
         const item = document.createElement('div');
         item.className = 'conversation-item';
         item.onclick = () => loadConversation(conv.name);
-        
+
         item.innerHTML = `
             <div class="fw-bold">${conv.title}</div>
             <div class="text-muted small">${conv.status} • ${conv.message_count} messages</div>
             <div class="text-muted small">${formatDate(conv.last_message_at)}</div>
         `;
-        
+
         listContainer.appendChild(item);
     });
 }
 
 function loadConversation(conversationName) {
     currentConversation = conversationName;
-    
+
     // Update active conversation in list
     document.querySelectorAll('.conversation-item').forEach(item => {
         item.classList.remove('active');
     });
     event.target.closest('.conversation-item').classList.add('active');
-    
+
     // Load messages
     frappe.call({
         method: 'education.education.api.get_conversation_messages',
@@ -304,15 +304,15 @@ function loadConversation(conversationName) {
 function renderMessages(messages) {
     const container = document.getElementById('chatMessages');
     container.innerHTML = '';
-    
+
     messages.forEach(msg => {
         addMessageToChat(msg.message_content, msg.message_type === 'Incoming' ? 'user' : 'ai', msg.creation, msg.name);
-        
+
         if (msg.ai_response && msg.message_type === 'Incoming') {
             addMessageToChat(msg.ai_response, 'ai', msg.creation, msg.name);
         }
     });
-    
+
     scrollToBottom();
 }
 
@@ -325,7 +325,7 @@ function startNewConversation() {
             </div>
         </div>
     `;
-    
+
     // Clear active conversation
     document.querySelectorAll('.conversation-item').forEach(item => {
         item.classList.remove('active');
@@ -341,16 +341,16 @@ function handleKeyPress(event) {
 function sendMessage() {
     const input = document.getElementById('messageInput');
     const message = input.value.trim();
-    
+
     if (!message) return;
-    
+
     // Add user message to chat
     addMessageToChat(message, 'user');
     input.value = '';
-    
+
     // Show typing indicator
     showTypingIndicator();
-    
+
     // Send message to backend
     frappe.call({
         method: 'education.education.api.send_ai_message',
@@ -362,11 +362,11 @@ function sendMessage() {
         },
         callback: function(r) {
             hideTypingIndicator();
-            
+
             if (r.message) {
                 // Reload conversations to get the new/updated one
                 loadConversations();
-                
+
                 // Simulate AI response (in real implementation, this would come from the AI processing)
                 setTimeout(() => {
                     addMessageToChat(
@@ -395,9 +395,9 @@ function addMessageToChat(message, sender, timestamp = null, messageId = null) {
     const container = document.getElementById('chatMessages');
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${sender}`;
-    
+
     const time = timestamp ? formatTime(timestamp) : formatTime(new Date());
-    
+
     let feedbackButtons = '';
     if (sender === 'ai' && messageId) {
         feedbackButtons = `
@@ -407,7 +407,7 @@ function addMessageToChat(message, sender, timestamp = null, messageId = null) {
             </div>
         `;
     }
-    
+
     messageDiv.innerHTML = `
         <div class="message-content">
             ${message}
@@ -415,7 +415,7 @@ function addMessageToChat(message, sender, timestamp = null, messageId = null) {
             ${feedbackButtons}
         </div>
     `;
-    
+
     container.appendChild(messageDiv);
     scrollToBottom();
 }
