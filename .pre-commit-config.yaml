@@ -5,7 +5,7 @@ fail_fast: false
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
         exclude: ".*json$|.*txt$|.*csv|.*md|.*svg"
@@ -21,7 +21,7 @@ repos:
       - id: black
 
   - repo: https://github.com/PyCQA/isort
-    rev: 7.0.0
+    rev: 5.13.2
     hooks:
       - id: isort
         exclude: ".*setup.py$"
