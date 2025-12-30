@@ -17,12 +17,12 @@ required_apps = ["erpnext"]
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/education/css/education.css"
-# app_include_js = "/assets/education/js/education.js"
+app_include_css = "/assets/education/css/ai_messaging.css"
+app_include_js = "/assets/education/js/ai_messaging.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/education/css/education.css"
-# web_include_js = "/assets/education/js/education.js"
+web_include_css = "/assets/education/css/ai_messaging.css"
+web_include_js = "/assets/education/js/ai_messaging.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "education/public/scss/website"
@@ -36,6 +36,7 @@ website_generators = ["Student Admission"]
 
 website_route_rules = [
 	{"from_route": "/admissions", "to_route": "Student Admission"},
+	{"from_route": "/ai-chat", "to_route": "ai-chat"},
 ]
 
 treeviews = ["Assessment Group"]

@@ -460,6 +460,65 @@ def update_email_group(doctype, name):
 	add_subscribers(name, email_list)
 
 
+# AI Messaging API Endpoints
+
+@frappe.whitelist()
+def send_ai_message(recipient_type, recipient, message_content, subject=None):
+	"""Send a message through the AI messaging system."""
+	from education.education.doctype.ai_message.ai_message import send_message
+	return send_message(recipient_type, recipient, message_content, subject)
+
+
+@frappe.whitelist()
+def get_ai_conversations(status=None, limit=20):
+	"""Get AI conversations for the current user."""
+	from education.education.doctype.ai_conversation.ai_conversation import get_user_conversations
+	return get_user_conversations(frappe.session.user, status, limit)
+
+
+@frappe.whitelist()
+def get_conversation_messages(conversation_name, limit=50):
+	"""Get messages for a specific conversation."""
+	from education.education.doctype.ai_message.ai_message import get_conversation_messages
+	return get_conversation_messages(conversation_name, limit)
+
+
+@frappe.whitelist()
+def get_ai_templates(category=None, user_type=None):
+	"""Get available AI message templates."""
+	filters = {"is_active": 1}
+	if category:
+		filters["category"] = category
+	if user_type and user_type != "All":
+		filters["user_type"] = ["in", [user_type, "All"]]
+	
+	return frappe.get_all(
+		"AI Message Template",
+		filters=filters,
+		fields=["name", "template_name", "template_type", "category", "description"],
+		order_by="priority desc, template_name"
+	)
+
+
+@frappe.whitelist()
+def submit_message_feedback(message_name, rating, comment=None):
+	"""Submit feedback for an AI message."""
+	message = frappe.get_doc("AI Message", message_name)
+	message.feedback_rating = rating
+	if comment:
+		message.feedback_comment = comment
+	message.save()
+	
+	return {"success": True, "message": "Feedback submitted successfully"}
+
+
+@frappe.whitelist()
+def get_ai_config_public():
+	"""Get public AI configuration settings."""
+	from education.education.doctype.ai_configuration.ai_configuration import get_ai_config
+	return get_ai_config()
+
+
 @frappe.whitelist()
 def get_current_enrollment(student, academic_year=None):
 	current_academic_year = academic_year or frappe.defaults.get_defaults().academic_year
