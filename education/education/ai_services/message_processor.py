@@ -310,9 +310,9 @@ class MessageProcessor:
             analysis = {
                 "message_count": len(messages),
                 "unique_intents": list(set(intents)),
-                "dominant_intent": max(set(intents), key=intents.count)
-                if intents
-                else None,
+                "dominant_intent": (
+                    max(set(intents), key=intents.count) if intents else None
+                ),
                 "sentiment_distribution": {
                     "positive": sentiments.count("positive"),
                     "negative": sentiments.count("negative"),
