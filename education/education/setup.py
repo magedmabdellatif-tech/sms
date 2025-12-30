@@ -2,8 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.custom.doctype.custom_field.custom_field import \
-    create_custom_fields
+from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 
 def setup_ai_messaging():
@@ -41,8 +40,9 @@ def setup_ai_messaging():
 
     # Create default message templates
     try:
-        from education.education.doctype.ai_message_template.ai_message_template import \
-            create_default_templates
+        from education.education.doctype.ai_message_template.ai_message_template import (
+            create_default_templates,
+        )
 
         result = create_default_templates()
         if result.get("success"):
