@@ -5,12 +5,12 @@
 import frappe
 from erpnext.support.doctype.issue.issue import get_holidays
 from frappe import _
-from frappe.utils import (add_days, cstr, date_diff, get_first_day,
-                          get_last_day, getdate)
+from frappe.utils import add_days, cstr, date_diff, get_first_day, get_last_day, getdate
 
 from education.education.api import get_student_group_students
-from education.education.doctype.student_attendance.student_attendance import \
-    get_holiday_list
+from education.education.doctype.student_attendance.student_attendance import (
+    get_holiday_list,
+)
 
 
 def execute(filters=None):

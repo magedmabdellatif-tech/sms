@@ -4,8 +4,9 @@
 
 import erpnext
 import frappe
-from erpnext.accounts.doctype.payment_request.payment_request import \
-    make_payment_request
+from erpnext.accounts.doctype.payment_request.payment_request import (
+    make_payment_request,
+)
 from erpnext.accounts.general_ledger import make_reverse_gl_entries
 from erpnext.controllers.accounts_controller import AccountsController
 from frappe import _

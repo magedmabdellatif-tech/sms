@@ -7,8 +7,9 @@ import frappe
 from frappe.utils import nowdate
 from frappe.utils.make_random import get_random
 
-from education.education.doctype.program.test_program import \
-    make_program_and_linked_courses
+from education.education.doctype.program.test_program import (
+    make_program_and_linked_courses,
+)
 
 test_dependencies = ["Company"]
 

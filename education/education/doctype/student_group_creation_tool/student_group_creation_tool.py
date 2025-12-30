@@ -6,8 +6,7 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 
-from education.education.doctype.student_group.student_group import \
-    get_students
+from education.education.doctype.student_group.student_group import get_students
 
 
 class StudentGroupCreationTool(Document):

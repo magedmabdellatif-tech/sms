@@ -10,8 +10,9 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import date_diff, flt, get_link_to_form, getdate
 
-from education.education.doctype.student_attendance.student_attendance import \
-    get_holiday_list
+from education.education.doctype.student_attendance.student_attendance import (
+    get_holiday_list,
+)
 
 
 class StudentLeaveApplication(Document):

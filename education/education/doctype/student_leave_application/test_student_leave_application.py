@@ -8,8 +8,9 @@ from erpnext import get_default_company
 from frappe.utils import add_days, add_months, getdate
 
 from education.education.doctype.student.test_student import create_student
-from education.education.doctype.student_group.test_student_group import \
-    get_random_group
+from education.education.doctype.student_group.test_student_group import (
+    get_random_group,
+)
 
 
 class TestStudentLeaveApplication(unittest.TestCase):

@@ -5,10 +5,10 @@ import unittest
 
 import frappe
 
-from education.education.doctype.program.test_program import \
-    make_program_and_linked_courses
-from education.education.doctype.student.test_student import (create_student,
-                                                              get_student)
+from education.education.doctype.program.test_program import (
+    make_program_and_linked_courses,
+)
+from education.education.doctype.student.test_student import create_student, get_student
 
 
 class TestProgramEnrollment(unittest.TestCase):

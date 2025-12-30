@@ -6,9 +6,10 @@ import unittest
 import frappe
 
 from education.education.doctype.course.test_course import (
-    make_course, make_course_and_linked_topic)
-from education.education.doctype.topic.test_topic import \
-    make_topic_and_linked_content
+    make_course,
+    make_course_and_linked_topic,
+)
+from education.education.doctype.topic.test_topic import make_topic_and_linked_content
 
 test_data = {
     "program_name": "_Test Program",

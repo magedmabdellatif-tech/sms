@@ -7,8 +7,9 @@ from erpnext.hr.doctype.holiday_list.holiday_list import is_holiday
 from frappe import _, msgprint
 from frappe.utils import formatdate
 
-from education.education.doctype.student_attendance.student_attendance import \
-    get_holiday_list
+from education.education.doctype.student_attendance.student_attendance import (
+    get_holiday_list,
+)
 
 
 def execute(filters=None):

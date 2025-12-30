@@ -28,8 +28,9 @@ class EducationSettings(Document):
         return frappe.defaults.get_defaults()
 
     def validate(self):
-        from frappe.custom.doctype.property_setter.property_setter import \
-            make_property_setter
+        from frappe.custom.doctype.property_setter.property_setter import (
+            make_property_setter,
+        )
 
         if self.get("instructor_created_by") == "Naming Series":
             make_property_setter(

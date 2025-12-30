@@ -5,8 +5,9 @@ import unittest
 
 import frappe
 
-from education.education.doctype.program.test_program import \
-    make_program_and_linked_courses
+from education.education.doctype.program.test_program import (
+    make_program_and_linked_courses,
+)
 
 test_records = frappe.get_test_records("Student")
 

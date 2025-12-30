@@ -8,8 +8,7 @@ from frappe.desk.form.linked_with import get_linked_doctypes
 from frappe.model.document import Document
 from frappe.utils import getdate, today
 
-from education.education.utils import (check_content_completion,
-                                       check_quiz_completion)
+from education.education.utils import check_content_completion, check_quiz_completion
 
 
 class Student(Document):
