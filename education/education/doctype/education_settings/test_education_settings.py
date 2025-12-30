@@ -5,4 +5,4 @@ import unittest
 
 
 class TestEducationSettings(unittest.TestCase):
-	pass
+    pass

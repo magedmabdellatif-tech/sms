@@ -9,9 +9,9 @@ from education.education.api import get_grade
 
 
 class TestAssessmentResult(unittest.TestCase):
-	def test_grade(self):
-		grade = get_grade("_Test Grading Scale", 80)
-		self.assertEqual("A", grade)
+    def test_grade(self):
+        grade = get_grade("_Test Grading Scale", 80)
+        self.assertEqual("A", grade)
 
-		grade = get_grade("_Test Grading Scale", 70)
-		self.assertEqual("B", grade)
+        grade = get_grade("_Test Grading Scale", 70)
+        self.assertEqual("B", grade)
